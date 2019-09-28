@@ -1,0 +1,8 @@
+/* .blog-tile
+{
+    margin: 20px;
+} */
+:host
+{
+    margin: 20px;
+}
