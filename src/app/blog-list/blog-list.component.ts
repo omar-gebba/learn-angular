@@ -1,6 +1,7 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, ViewChildren, QueryList } from '@angular/core';
 import { BlogPost } from '../blog-post';
 import { BlogPostTileComponent } from '../blog-post-tile/blog-post-tile.component';
+import { BlogDataService } from '../blog-data.service';
 
 @Component({
   selector: 'app-blog-list',
@@ -10,34 +11,16 @@ import { BlogPostTileComponent } from '../blog-post-tile/blog-post-tile.componen
 export class BlogListComponent implements OnInit {
 
   blogPosts: BlogPost[][];
-  currentPage:number =  0;
-  @ViewChild('#tile') blogPostTileComponent:BlogPostTileComponent;
+  currentPage:number;
+  @ViewChildren('tile') blogPostTileComponents:QueryList<BlogPostTileComponent>;
 
-  constructor() { }
+  constructor(private blogDataService: BlogDataService) { }
 
   ngOnInit() 
   {
-    this.blogPosts=
-    [
-      [
-        {title: 'post 1', summary: 'Summary 1 Formal framework'},
-        {title: 'post 2', summary: 'Summary 1 Formal framework'},
-        {title: 'post 3', summary: 'Summary 1 Formal framework'},
-        {title: 'post 4', summary: 'Summary 1 Formal framework'}
-      ],
-      [
-        {title: 'post 5', summary: 'Summary 1 Formal framework'},
-        {title: 'post 6', summary: 'Summary 1 Formal framework'},
-        {title: 'post 7', summary: 'Summary 1 Formal framework'},
-        {title: 'post 8', summary: 'Summary 1 Formal framework'}
-      ],
-      [
-        {title: 'post 9 ', summary: 'Summary 1 Formal framework'},
-        {title: 'post 10', summary: 'Summary 1 Formal framework'},
-        {title: 'post 11', summary: 'Summary 1 Formal framework'},
-        {title: 'post 12', summary: 'Summary 1 Formal framework'}
-      ],
-    ]
+    this.currentPage = 0;
+
+    this.blogPosts = this.blogDataService.getData();
   }
 
   updatePage(newPage)
@@ -47,7 +30,7 @@ export class BlogListComponent implements OnInit {
 
   expandAll()
   {
-    this.blogPostTileComponent.showAllSummary();
+    this.blogPostTileComponents.forEach(e=>e.showAllSummary());
   }
 
 }

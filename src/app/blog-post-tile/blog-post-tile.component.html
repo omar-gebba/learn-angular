@@ -1,7 +1,8 @@
-<div class="card blog-tile">
+<div class="card blog-tile" [ngClass]="{'fav': post.isFav}" >
   <div class="card-body">
     <h5 class="title">{{ post.title }}</h5>
     <p class="card-text">{{ post.summary }}</p>
     <a href="#" class="btn btn-primary" (click)="showAllSummary()">Read</a>
+    <a href="#" class="btn btn-primary" (click)="toggleFav()">Add To Favorite</a>
   </div>
 </div>
